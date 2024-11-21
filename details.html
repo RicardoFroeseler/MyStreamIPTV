@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Filme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <button id="backButton">Voltar</button>
+    </header>
+    <main>
+        <div class="details-container">
+            <div class="movie-info">
+                <h1 id="movieTitle">Título do Filme</h1>
+                <p id="movieDescription">Descrição do filme será carregada aqui.</p>
+                <div class="movie-actions">
+                    <button id="watchMovie">Assistir Agora</button>
+                </div>
+            </div>
+            <div class="movie-image">
+                <img id="moviePoster" src="" alt="Poster do Filme">
+            </div>
+        </div>
+        <section class="player">
+            <video id="videoPlayer" controls></video>
+        </section>
+    </main>
+    <script src="details.js"></script>
+</body>
+</html>
