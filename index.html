@@ -3,62 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Filmes</title>
-    <link rel="stylesheet" href="styles-listing.css">
+    <title>Login - Catálogo</title>
+    <link rel="stylesheet" href="styles-login.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Filmes</a></li>
-                <li><a href="#">Notícias</a></li>
-                <li><a href="#">Contato</a></li>
-                <li><a href="#">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="highlight">
-            <div class="highlight-content">
-                <h1>Destaque do Dia</h1>
-                <p id="highlightDescription">
-                    Este é o destaque do dia. Escolha seu filme favorito e aproveite a melhor experiência
-                    de entretenimento.
-                </p>
-                <button class="watch-trailer">Assistir Trailer</button>
-            </div>
-            <div class="highlight-poster">
-                <img id="highlightPoster" src="https://via.placeholder.com/300x450" alt="Poster do Destaque">
-            </div>
-        </section>
-
-        <section class="filters">
-            <div class="filter-group">
-                <label>Filtrar por Categoria</label>
-                <select id="categoryFilter">
-                    <option value="all">Todos</option>
-                </select>
-            </div>
-        </section>
-
-        <section class="movie-list" id="movieList">
-            <!-- Filmes serão carregados aqui -->
-        </section>
+    <main class="login-container">
+        <h1>Bem-vindo ao Catálogo</h1>
+        <p>Escolha o que você deseja assistir:</p>
+        <div class="options">
+            <button id="moviesButton">Filmes</button>
+            <button id="seriesButton">Séries</button>
+        </div>
     </main>
-    <footer>
-        <div class="footer-links">
-            <a href="#">Home</a>
-            <a href="#">Filmes</a>
-            <a href="#">Notícias</a>
-            <a href="#">Contato</a>
-        </div>
-        <div class="social-media">
-            <a href="#">Facebook</a>
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
-        </div>
-    </footer>
-    <script src="script-listing.js"></script>
+    <script>
+        document.getElementById("moviesButton").addEventListener("click", () => {
+            window.location.href = "list-filmes.html";
+        });
+
+        document.getElementById("seriesButton").addEventListener("click", () => {
+            window.location.href = "list-series.html";
+        });
+    </script>
 </body>
 </html>

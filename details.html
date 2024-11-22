@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Filme</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles-details.css">
 </head>
 <body>
-    <header>
-        <button id="backButton">Voltar</button>
-    </header>
-    <main>
+    <main id="movieBackground">
         <div class="details-container">
+            <!-- Informações do Filme -->
             <div class="movie-info">
                 <h1 id="movieTitle">Título do Filme</h1>
-                <p id="movieDescription">Descrição do filme será carregada aqui.</p>
-                <div class="movie-actions">
-                    <button id="watchMovie">Assistir Agora</button>
+                <!-- Logotipo -->
+                <div id="movieLogo">
+                    <!-- Logotipo será carregado dinamicamente aqui -->
                 </div>
+                <div class="player-buttons">
+                    <button id="modalButton">Assistir no Modal</button>
+                    <button id="fullscreenButton">Assistir em Tela Cheia</button>
+                    <button id="backButton">Voltar</button>
+                </div>
+                <p id="movieDescription">Descrição será carregada aqui.</p>
+                <p><strong>Elenco:</strong> <span id="movieCast">Elenco será carregado aqui.</span></p>
+                <p><strong>Gênero:</strong> <span id="movieGenre">Gênero será carregado aqui.</span></p>
+                <p><strong>Duração:</strong> <span id="movieDuration">Duração será carregada aqui.</span></p>
+                <p><strong>Lançamento:</strong> <span id="movieReleaseDate">Data será carregada aqui.</span></p>
             </div>
-            <div class="movie-image">
-                <img id="moviePoster" src="" alt="Poster do Filme">
+            
+            <!-- Poster do Filme -->
+            <div class="movie-poster">
+                <img id="moviePoster" src="https://via.placeholder.com/300x450" alt="Poster do Filme">
             </div>
         </div>
-        <section class="player">
-            <video id="videoPlayer" controls></video>
-        </section>
     </main>
+
+    <!-- Modal para Reprodução -->
+    <div id="modal">
+        <span class="close" id="closeModal">&times;</span>
+        <iframe id="iframePlayer" src=""></iframe>
+    </div>
     <script src="details.js"></script>
 </body>
 </html>

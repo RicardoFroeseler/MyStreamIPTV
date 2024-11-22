@@ -9,16 +9,21 @@ const highlightDescription = document.getElementById("highlightDescription");
 
 let categories = [];
 let movies = [];
+let series = [];
 
-// Carregar categorias de filmes
+// Carregar categorias de filmes e séries
 async function loadCategories() {
     try {
-        const response = await fetch(`${serverURL}/player_api.php?username=${username}&password=${password}&action=get_vod_categories`);
-        categories = await response.json();
+        const [vodResponse, seriesResponse] = await Promise.all([
+            fetch(`${serverURL}/player_api.php?username=${username}&password=${password}&action=get_vod_categories`),
+            fetch(`${serverURL}/player_api.php?username=${username}&password=${password}&action=get_series_categories`),
+        ]);
 
-        if (categories && categories.length > 0) {
-            populateCategoryFilter(categories);
-        }
+        const vodCategories = await vodResponse.json();
+        const seriesCategories = await seriesResponse.json();
+
+        categories = [...vodCategories, ...seriesCategories]; // Combina as categorias
+        populateCategoryFilter(categories);
     } catch (error) {
         console.error("Erro ao carregar categorias:", error);
         alert("Erro ao carregar categorias.");
@@ -35,64 +40,68 @@ function populateCategoryFilter(categories) {
     });
 }
 
-// Carregar filmes de uma categoria
-async function loadMovies(categoryId = "all") {
+// Carregar conteúdos (filmes ou séries) de uma categoria
+async function loadContent(categoryId = "all") {
     try {
         movieList.innerHTML = ""; // Limpar lista antes de carregar
-        let url = `${serverURL}/player_api.php?username=${username}&password=${password}&action=get_vod_streams`;
-        if (categoryId !== "all") {
-            url += `&category_id=${categoryId}`;
-        }
-        const response = await fetch(url);
-        movies = await response.json();
 
-        if (movies && movies.length > 0) {
-            displayMovies(movies);
-            updateHighlight(movies[0]); // Usar o primeiro filme como destaque
+        const vodPromise = fetch(`${serverURL}/player_api.php?username=${username}&password=${password}&action=get_vod_streams`);
+        const seriesPromise = fetch(`${serverURL}/player_api.php?username=${username}&password=${password}&action=get_series`);
+
+        const [vodResponse, seriesResponse] = await Promise.all([vodPromise, seriesPromise]);
+        movies = await vodResponse.json();
+        series = await seriesResponse.json();
+
+        let contentList = [...movies, ...series]; // Combina filmes e séries
+
+        // Filtrar por categoria, se aplicável
+        if (categoryId !== "all") {
+            contentList = contentList.filter((content) => content.category_id === categoryId);
+        }
+
+        displayMovies(contentList);
+        if (contentList.length > 0) {
+            updateHighlight(contentList[0]); // Usar o primeiro item como destaque
         }
     } catch (error) {
-        console.error("Erro ao carregar filmes:", error);
-        alert("Erro ao carregar filmes.");
+        console.error("Erro ao carregar conteúdo:", error);
+        alert("Erro ao carregar filmes e séries.");
     }
 }
 
-// Exibir filmes como cards
-function displayMovies(movies) {
-    movies.forEach((movie) => {
-        const movieCard = document.createElement("div");
-        movieCard.className = "movie-card";
-        movieCard.innerHTML = `
-            <img src="${movie.stream_icon || "https://via.placeholder.com/200x300"}" alt="${movie.name}">
-            <h3>${movie.name}</h3>
-            <div class="showtimes">
-                <span>15:00</span>
-                <span>17:00</span>
-                <span>19:00</span>
-            </div>
+// Exibir conteúdo (filmes ou séries) como cards
+function displayMovies(contentList) {
+    contentList.forEach((content) => {
+        const contentCard = document.createElement("div");
+        contentCard.className = "movie-card";
+        contentCard.innerHTML = `
+            <img src="${content.stream_icon || "https://via.placeholder.com/200x300"}" alt="${content.name}">
+            <h3>${content.name}</h3>
         `;
-        movieCard.addEventListener("click", () => redirectToDetails(movie));
-        movieList.appendChild(movieCard);
+        contentCard.addEventListener("click", () => redirectToDetails(content));
+        movieList.appendChild(contentCard);
     });
 }
 
-// Atualizar destaque do filme
-function updateHighlight(movie) {
-    highlightPoster.src = movie.stream_icon || "https://via.placeholder.com/300x450";
-    highlightDescription.textContent = movie.name;
+// Atualizar destaque do dia
+function updateHighlight(content) {
+    highlightPoster.src = content.stream_icon || "https://via.placeholder.com/300x450";
+    highlightDescription.textContent = content.name || "Destaque do Dia";
 }
 
-// Redirecionar para página de detalhes do filme
-function redirectToDetails(movie) {
-    const url = `details.html?name=${encodeURIComponent(movie.name)}&stream_id=${movie.stream_id}&icon=${encodeURIComponent(movie.stream_icon || "")}`;
+// Redirecionar para página de detalhes
+function redirectToDetails(content) {
+    const type = content.stream_type === "movie" ? "movie" : "series";
+    const url = `details.html?type=${type}&name=${encodeURIComponent(content.name)}&stream_id=${content.stream_id}&icon=${encodeURIComponent(content.stream_icon || "")}`;
     window.location.href = url;
 }
 
 // Eventos
 categoryFilter.addEventListener("change", (event) => {
     const categoryId = event.target.value;
-    loadMovies(categoryId);
+    loadContent(categoryId);
 });
 
 // Inicializar página
 loadCategories();
-loadMovies();
+loadContent();

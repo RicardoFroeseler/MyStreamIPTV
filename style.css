@@ -1,3 +1,4 @@
+/* Estilos Globais */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,63 +8,141 @@ body {
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
     background-color: #333;
-    padding: 15px;
-}
-
-button {
-    padding: 10px;
-    margin: 5px;
-    background-color: #e50914;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-button:hover {
-    background-color: #ff1c1c;
-}
-
-.details-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 20px;
 }
 
-.movie-info {
-    max-width: 60%;
+header h1 {
+    margin: 0;
+    color: #fff;
 }
 
-.movie-info h1 {
-    font-size: 2.5rem;
+/* Destaque do Dia */
+#daily-highlight {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 1200px;
+    color: #fff;
+}
+
+.highlight-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.highlight-info {
+    flex: 2;
+    text-align: left;
+}
+
+.highlight-info h1 {
+    font-size: 32px;
     margin-bottom: 15px;
 }
 
-.movie-info p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
+.highlight-info p {
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.6;
 }
 
-.movie-actions button {
-    font-size: 1.2rem;
-    padding: 10px 20px;
+.highlight-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
 }
 
-.movie-image img {
+.highlight-buttons button {
+    padding: 10px 16px;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.highlight-buttons button:hover {
+    background-color: #ff1c1c;
+}
+
+.highlight-poster img {
     max-width: 300px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
 }
 
-.player video {
-    width: 100%;
-    max-height: 400px;
-    margin-top: 20px;
+/* Seções de Filmes e Séries */
+section {
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.content-grid .content-item {
+    background-color: #222;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.content-grid .content-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+.content-grid img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.content-grid h3 {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #fff;
+}
+
+.content-grid button {
+    padding: 5px 10px;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.content-grid button:hover {
+    background-color: #ff1c1c;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
 }
